@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useRef, useState, ReactNod
 import { Category, Language } from './types';
 import { useLanguage } from './LanguageContext';
 
-const API_BASE = 'https://mandik.info/api/v1/ltu/portfolio/';
+const API_BASE = '/api/v1/ltu/portfolio/';
 const TOKEN = import.meta.env.VITE_PORTFOLIO_API_TOKEN as string;
 
 const localeMap: Record<Language, string> = {
