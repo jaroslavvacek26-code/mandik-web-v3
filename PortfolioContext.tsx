@@ -40,9 +40,7 @@ export const PortfolioProvider: React.FC<{ children: ReactNode }> = ({ children 
     setLoading(true);
     setError(null);
 
-    fetch(`${API_BASE}?locale=${locale}`, {
-      headers: { Authorization: `Bearer ${TOKEN}` },
-    })
+    fetch(`${API_BASE}?locale=${locale}`)
       .then((res) => {
         if (!res.ok) throw new Error(`API error ${res.status}`);
         return res.json();
