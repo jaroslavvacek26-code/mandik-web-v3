@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 /* Fix: Explicitly ensuring correct imports from react-router-dom for v6 compatibility */
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Phone, Mail, Globe, Search } from 'lucide-react';
-import { getCategories } from '../data';
 import { useLanguage } from '../LanguageContext';
+import { usePortfolio } from '../PortfolioContext';
 import { Language } from '../types';
 
 interface LayoutProps {
@@ -16,10 +16,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const location = useLocation();
   const { language, setLanguage, t } = useLanguage();
+  const { categories } = usePortfolio();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  
-  const categories = getCategories(language);
 
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
