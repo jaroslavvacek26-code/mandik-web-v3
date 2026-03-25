@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Phone, Mail, Clock, Send, Building, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
+import SalesMap from '../components/SalesMap';
 
 const Contact: React.FC = () => {
   const { t, language } = useLanguage();
@@ -99,6 +100,11 @@ const Contact: React.FC = () => {
                     ></iframe>
                 </div>
             </div>
+        </div>
+
+        {/* Sales Map */}
+        <div className="mt-12">
+          <SalesMap />
         </div>
 
         {/* Contact Departments Grid */}
