@@ -33,7 +33,7 @@ const EuroRegionMap: React.FC<EuroRegionMapProps> = ({
   language,
   dark,
 }) => {
-  const stroke = '#06111e';
+  const stroke = '#bfdbfe';
   const fill        = `${divColor}88`;
   const fillHover   = `${divColor}cc`;
 
@@ -81,7 +81,7 @@ const EuroRegionMap: React.FC<EuroRegionMapProps> = ({
 
       <p
         className="text-xs mt-1"
-        style={{ color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.4)' }}
+        style={{ color: '#94a3b8' }}
       >
         {language === 'de'
           ? 'Region anklicken'

@@ -85,26 +85,10 @@ const Contact: React.FC = () => {
                 </div>
             </div>
 
-            {/* Map & Form Section */}
-            <div className="lg:col-span-2 space-y-8">
-                {/* Map */}
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden h-[300px] lg:h-[400px]">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=Dob%C5%99%C3%AD%C5%A1sk%C3%A1+550,+267+24+Hostomice+pod+Brdy&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                        width="100%" 
-                        height="100%" 
-                        style={{ border: 0 }} 
-                        allowFullScreen 
-                        loading="lazy"
-                        title="Mandík Map"
-                    ></iframe>
-                </div>
+            {/* Interactive Sales Map */}
+            <div className="lg:col-span-2">
+                <SalesMap />
             </div>
-        </div>
-
-        {/* Sales Map */}
-        <div className="mt-12">
-          <SalesMap />
         </div>
 
         {/* Contact Departments Grid */}

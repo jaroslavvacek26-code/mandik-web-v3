@@ -24,15 +24,15 @@ const AT_CODES = new Set(['40', '040']);
 // Company HQ – Dobříšská 550, Hostomice (Central Bohemia)
 const HQ: [number, number] = [14.043, 49.795];
 
-// Dark theme palette
+// Light theme palette – blues kept, darks inverted to light
 const C = {
-  bg:        '#06111e',
-  country:   '#0c1e31',   // base country fill – slightly above bg so shapes are visible
-  southeast: '#0f3460',
-  czech:     '#00AEEF',
-  german:    '#0077b6',
-  hover:     '#00c8ff',
-  border:    '#112233',   // slightly lighter stroke for 50m crispness
+  bg:        '#f0f8ff',   // alice-blue – clean light base
+  country:   '#dbeafe',   // blue-100 – subtle country fill
+  southeast: '#93c5fd',   // blue-300 – rest-of-world / SE division
+  czech:     '#00AEEF',   // mandikBlue (unchanged)
+  german:    '#0077b6',   // darker blue (unchanged)
+  hover:     '#0ea5e9',   // sky-500 hover
+  border:    '#bfdbfe',   // blue-200 – country borders
 };
 
 const divColor: Record<DivisionId, string> = {
@@ -85,26 +85,26 @@ const SalesMap: React.FC = () => {
 
       {/* ── Header ── */}
       <div className="flex items-center justify-between px-5 py-3"
-           style={{ background: 'rgba(0,0,0,0.4)', borderBottom: '1px solid rgba(0,174,239,0.15)' }}>
+           style={{ background: 'white', borderBottom: '1px solid #dbeafe' }}>
         <div className="flex items-center gap-3">
           {activeCountry !== null && (
             <button onClick={handleBack}
               className="flex items-center gap-1 text-sm transition-colors"
-              style={{ color: 'rgba(255,255,255,0.5)' }}
+              style={{ color: '#94a3b8' }}
               onMouseEnter={e => (e.currentTarget.style.color = C.czech)}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}>
+              onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}>
               <ChevronLeft size={16} />
               {lbl('Zpět', 'Back', 'Zurück', language)}
             </button>
           )}
-          <span className="flex items-center gap-2 font-semibold text-white text-base">
+          <span className="flex items-center gap-2 font-semibold text-base" style={{ color: '#0f172a' }}>
             <Globe2 size={18} style={{ color: C.czech }} />
             {subTitle()}
           </span>
         </div>
 
         {/* Legend */}
-        <div className="hidden sm:flex items-center gap-4 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+        <div className="hidden sm:flex items-center gap-4 text-xs" style={{ color: '#64748b' }}>
           {([['czech',     lbl('Český',       'Czech',    'Tschech.', language)],
              ['german',    lbl('Německý',     'German',   'Deutsch',  language)],
              ['southeast', lbl('Jihovýchodní','Southeast','Südost',   language)],
@@ -195,12 +195,12 @@ const SalesMap: React.FC = () => {
 
                   {/* HQ marker – Dobříšská 550, Hostomice */}
                   <Marker coordinates={HQ}>
-                    <circle r={3.5} fill="none" stroke="white" strokeWidth={1} opacity={0.85} />
-                    <circle r={1.5} fill="white" />
+                    <circle r={3.5} fill="none" stroke={C.german} strokeWidth={1.2} />
+                    <circle r={1.8} fill={C.german} />
                     <text
                       textAnchor="middle" y={-6}
                       fontSize={3.2} fontWeight={700} letterSpacing={0.3}
-                      fill="white" style={{ pointerEvents: 'none', userSelect: 'none' }}>
+                      fill="#0f172a" style={{ pointerEvents: 'none', userSelect: 'none' }}>
                       MANDÍK a.s.
                     </text>
                   </Marker>
@@ -217,9 +217,9 @@ const SalesMap: React.FC = () => {
                 ].map(([icon, fn], i) => (
                   <button key={i} onClick={fn as () => void}
                     className="w-7 h-7 rounded flex items-center justify-center font-bold text-sm transition-colors"
-                    style={{ background: 'rgba(0,174,239,0.15)', color: C.czech, border: `1px solid rgba(0,174,239,0.3)` }}
-                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,174,239,0.3)')}
-                    onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,174,239,0.15)')}>
+                    style={{ background: '#eff6ff', color: C.german, border: `1px solid ${C.border}` }}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#dbeafe')}
+                    onMouseLeave={e => (e.currentTarget.style.background = '#eff6ff')}>
                     {icon as string}
                   </button>
                 ))}
@@ -231,7 +231,7 @@ const SalesMap: React.FC = () => {
           {!selected && activeCountry === null && (
             <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none">
               <span className="text-xs px-3 py-1.5 rounded-full"
-                style={{ background: 'rgba(0,0,0,0.5)', color: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(4px)' }}>
+                style={{ background: 'rgba(255,255,255,0.85)', color: '#64748b', backdropFilter: 'blur(4px)', border: '1px solid #dbeafe' }}>
                 {lbl('Klikněte na zemi', 'Click on a country', 'Land auswählen', language)}
               </span>
             </div>
@@ -242,17 +242,17 @@ const SalesMap: React.FC = () => {
         {selected && (
           <div className="lg:w-72 flex flex-col p-6 gap-4"
             style={{
-              background: 'rgba(0,0,0,0.45)',
-              borderLeft: '1px solid rgba(0,174,239,0.12)',
-              backdropFilter: 'blur(8px)',
+              background: 'white',
+              borderLeft: '1px solid #dbeafe',
+              boxShadow: '-2px 0 8px rgba(0,0,0,0.06)',
             }}>
 
             <div>
               <p className="text-xs font-medium uppercase tracking-widest mb-1"
-                style={{ color: 'rgba(255,255,255,0.35)' }}>
+                style={{ color: '#94a3b8' }}>
                 {selected.divisionName[language]}
               </p>
-              <h3 className="text-2xl font-bold text-white leading-tight">
+              <h3 className="text-2xl font-bold leading-tight" style={{ color: '#0f172a' }}>
                 {selected.regionName[language]}
               </h3>
               <div className="mt-2 h-0.5 w-10 rounded"
@@ -263,12 +263,12 @@ const SalesMap: React.FC = () => {
               {/* Rep */}
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(0,174,239,0.12)', border: '1px solid rgba(0,174,239,0.2)' }}>
+                  style={{ background: '#eff6ff', border: `1px solid ${C.border}` }}>
                   <User size={15} style={{ color: C.czech }} />
                 </div>
                 <div>
-                  <p className="font-semibold text-white text-sm">{selected.representative}</p>
-                  <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <p className="font-semibold text-sm" style={{ color: '#0f172a' }}>{selected.representative}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#94a3b8' }}>
                     {selected.title[language]}
                   </p>
                 </div>
@@ -277,14 +277,14 @@ const SalesMap: React.FC = () => {
               {/* Phone */}
               <a href={`tel:${selected.phone.replace(/\s/g,'')}`}
                 className="flex items-center gap-3 group">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-colors"
-                  style={{ background: 'rgba(0,174,239,0.08)', border: '1px solid rgba(0,174,239,0.15)' }}>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{ background: '#eff6ff', border: `1px solid ${C.border}` }}>
                   <Phone size={14} style={{ color: C.czech }} />
                 </div>
                 <span className="text-sm transition-colors"
-                  style={{ color: 'rgba(255,255,255,0.65)' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = C.czech)}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}>
+                  style={{ color: '#475569' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = C.german)}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#475569')}>
                   {selected.phone}
                 </span>
               </a>
@@ -293,13 +293,13 @@ const SalesMap: React.FC = () => {
               <a href={`mailto:${selected.email}`}
                 className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(0,174,239,0.08)', border: '1px solid rgba(0,174,239,0.15)' }}>
+                  style={{ background: '#eff6ff', border: `1px solid ${C.border}` }}>
                   <Mail size={14} style={{ color: C.czech }} />
                 </div>
                 <span className="text-sm break-all transition-colors"
-                  style={{ color: 'rgba(255,255,255,0.65)' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = C.czech)}
-                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}>
+                  style={{ color: '#475569' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = C.german)}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#475569')}>
                   {selected.email}
                 </span>
               </a>
@@ -307,9 +307,9 @@ const SalesMap: React.FC = () => {
 
             <button onClick={() => setSelected(null)}
               className="flex items-center gap-1 text-xs transition-colors self-start mt-2"
-              style={{ color: 'rgba(255,255,255,0.25)' }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.25)')}>
+              style={{ color: '#cbd5e1' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#64748b')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#cbd5e1')}>
               <X size={12} /> {lbl('Zavřít', 'Close', 'Schließen', language)}
             </button>
           </div>
